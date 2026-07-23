@@ -301,6 +301,9 @@ opacity:0;
 </head>
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+
 <body>
 
 
@@ -545,7 +548,12 @@ opacity:0;
 شماره بلیت:
 <span id="tnumber"></span>
 </p>
+<div id="qrcode"></div>
 
+
+<p>
+لطفا بلیط خود را هنگام ورود نشان داده و در نگه داری از آن کوشا باشید
+</p>
 
 </div>
 
@@ -870,8 +878,13 @@ tlike.innerHTML=data.like;
 
 tnumber.innerHTML=ticket;
 
+document.getElementById("qrcode").innerHTML="";
 
-
+new QRCode(document.getElementById("qrcode"),{
+text:ticket,
+width:60,
+height:60
+});
 
 
 

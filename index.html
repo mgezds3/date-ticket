@@ -2,68 +2,299 @@
 <html lang="fa" dir="rtl">
 
 <head>
+
 <meta charset="UTF-8">
-<title>Date Ticket ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Date Express</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
 
 <style>
 
-body{
-background:#ffeef5;
-font-family:tahoma;
-text-align:center;
-padding-top:40px;
-overflow:hidden;
+*{
+box-sizing:border-box;
+font-family:'Vazirmatn',sans-serif;
 }
 
-.box{
-background:white;
-width:360px;
-margin:auto;
-padding:30px;
-border-radius:25px;
-box-shadow:0 0 20px #ccc;
-min-height:400px;
-position:relative;
+
+body{
+
+margin:0;
+
+min-height:100vh;
+
+background:linear-gradient(135deg,#fff7e6,#dceeff);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:20px;
+
+overflow:auto;
+
 }
+
+
+
+.card{
+
+width:100%;
+
+max-width:430px;
+
+background:white;
+
+padding:35px;
+
+border-radius:35px;
+
+text-align:center;
+
+box-shadow:0 20px 50px #0003;
+
+}
+
+
+
+h1{
+
+font-size:30px;
+
+font-weight:800;
+
+}
+
+
+
+h2{
+
+font-weight:800;
+
+}
+
+
 
 button{
-padding:12px 25px;
-border:0;
-border-radius:20px;
-font-size:18px;
+
+border:none;
+
+border-radius:999px;
+
+padding:14px 35px;
+
+font-size:17px;
+
+font-weight:700;
+
+margin:10px;
+
 cursor:pointer;
-}
 
-.yes{
-background:#ff4f81;
-color:white;
-}
-
-.no{
-background:#555;
-color:white;
-position:absolute;
 transition:.3s;
+
 }
 
-input{
-width:85%;
-padding:12px;
-margin:6px;
-border-radius:10px;
-border:1px solid #ccc;
+
+
+button:hover{
+
+transform:scale(1.08);
+
 }
 
-.hide{
+
+
+#yes{
+
+background:#4caf50;
+
+color:white;
+
+}
+
+
+
+#no{
+
+background:#e74c3c;
+
+color:white;
+
+position:absolute;
+
+}
+
+
+
+.hidden{
+
 display:none;
+
 }
+
+
+
+input,textarea{
+
+width:100%;
+
+padding:14px;
+
+margin:8px 0;
+
+border-radius:18px;
+
+border:2px solid #ddd;
+
+font-size:16px;
+
+}
+
+
+
+textarea{
+
+height:100px;
+
+}
+
+
+
+.menu{
+
+display:flex;
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+gap:12px;
+
+}
+
+
+
+.menu button{
+
+width:100px;
+
+min-height:55px;
+
+padding:10px 8px;
+
+font-size:15px;
+
+line-height:1.4;
+
+background:white;
+
+border:2px solid #eee;
+
+border-radius:22px;
+
+white-space:normal;
+
+}
+
+
+
+
+.menu button.selected{
+
+transform:scale(1.08);
+
+background:#8d6e63;
+
+color:white;
+
+border:3px solid #5d4037;
+
+box-shadow:0 10px 25px #0003;
+
+}
+
+
 
 .ticket{
-background:#fff0f5;
-border:2px dashed #ff4f81;
-padding:20px;
-border-radius:20px;
+
+background:#f4dfad;
+
+padding:30px;
+
+border-left:12px dotted white;
+
+border-right:12px dotted white;
+
 }
+
+
+.ticket p{
+
+border-bottom:1px dashed #795548;
+
+padding:8px;
+
+font-size:15px;
+
+}
+
+
+
+/* افکت ذرات داخل صفحه سفارش */
+
+.particle{
+
+position:fixed;
+
+font-size:20px;
+
+opacity:.7;
+
+animation:float 8s linear infinite;
+
+pointer-events:none;
+
+z-index:0;
+
+}
+
+
+
+@keyframes float{
+
+0%{
+
+transform:translateY(100vh) rotate(0deg);
+
+opacity:0;
+
+}
+
+
+20%{
+
+opacity:.8;
+
+}
+
+
+100%{
+
+transform:translateY(-20vh) rotate(360deg);
+
+opacity:0;
+
+}
+
+}
+
 
 </style>
 
@@ -73,28 +304,20 @@ border-radius:20px;
 <body>
 
 
-<div class="box">
+<div class="card" id="question">
 
 
-<div id="start">
-
-<h1>❤️</h1>
-
-<h2>
-میشه همراه من بیای؟
-</h2>
-
-<p>
- انتخاب کاملاً با خودته میتونی بگی نه 😊
-</p>
+<h1>
+یه دیتون نشه؟
+</h1>
 
 
-<button class="yes" onclick="acceptDate()">
-بله
+<button id="yes">
+بله ❤️
 </button>
 
 
-<button class="no" id="noBtn">
+<button id="no">
 نه
 </button>
 
@@ -104,23 +327,24 @@ border-radius:20px;
 
 
 
-<div id="info" class="hide">
-
-<h2>🎉 هورااا</h2>
-
-<p>چیز یعنی مرسی که قبول کردی   ❤️</p>
 
 
-<input id="fullname" placeholder="اسم و فامیل">
-
-<input id="date" type="date">
-
-<input id="time" type="time">
 
 
-<br>
+<div class="card hidden" id="hoora">
 
-<button class="yes" onclick="openLikes()">
+
+<h2>
+هوراااا 🎉
+</h2>
+
+
+<p>
+چیزه یعنی بریم برنامه‌ریزی کنیم 
+</p>
+
+
+<button onclick="nextForm()">
 ادامه
 </button>
 
@@ -130,25 +354,69 @@ border-radius:20px;
 
 
 
-<div id="likes" class="hide">
-
-<h2>✨ علایق</h2>
 
 
-<input id="food" placeholder="غذای مورد علاقه">
 
-<input id="drink" placeholder="نوشیدنی مورد علاقه">
 
-<input id="place" placeholder="مکان مورد علاقه">
+<div class="card hidden" id="form">
 
-<input id="favorite" placeholder="چیزهایی که دوست داره">
 
-<input id="favorite" placeholder="گل مورد علاقه">
+<h2>
+سفارشات دیت
+</h2>
 
-<br>
 
-<button class="yes" onclick="makeTicket()">
-ساخت تیکت 🎟
+<input id="name" placeholder="اسم و فامیل">
+
+
+
+<p>
+تاریخ
+</p>
+
+
+<input id="date" type="date">
+
+
+
+<p>
+ساعت
+</p>
+
+
+<input id="time" type="time">
+
+
+
+
+
+
+<h3>
+غذا 🍽️
+</h3>
+
+
+
+<div class="menu">
+
+
+<button class="food" onclick="selectFood(this,'پیتزا 🍕')">
+🍕 پیتزا
+</button>
+
+
+<button class="food" onclick="selectFood(this,'برگر 🍔')">
+🍔 برگر
+</button>
+
+
+<button class="food" onclick="selectFood(this,'پاستا 🍝')">
+🍝 پاستا
+</button>
+
+
+<button class="food" onclick="selectFood(this,'سوشی 🍣')">
+🍣 سوشی
 </button>
 
 
@@ -158,136 +426,475 @@ border-radius:20px;
 
 
 
-<div id="result" class="hide">
 
-<div class="ticket">
-
-<h2>🎟 DATE TICKET</h2>
-
-<div id="ticketText"></div>
 
 <h3>
-❤️ CONFIRMED ❤️
+نوشیدنی ☕
 </h3>
 
-</div>
+
+
+<div class="menu">
+
+
+<button class="drink" onclick="selectDrink(this,'قهوه ☕')">
+☕ قهوه
+</button>
+
+
+<button class="drink" onclick="selectDrink(this,'موهیتو 🍹')">
+🍹 موهیتو
+</button>
+
+
+<button class="drink" onclick="selectDrink(this,'شیک 🥤')">
+🥤 شیک
+</button>
+
+
+<button class="drink" onclick="selectDrink(this,'آبمیوه 🧃')">
+🧃 آبمیوه
+</button>
+
 
 </div>
 
 
 
+
+
+<input id="flower" placeholder="گل مورد علاقه 🌹">
+
+
+<input id="place" placeholder="مکان مورد علاقه">
+
+
+<textarea id="like" placeholder="چیزهایی که دوست داره"></textarea>
+
+
+
+<button onclick="sendData()">
+ساخت بلیت
+</button>
+
+
+
 </div>
 
 
+
+
+
+<div class="card hidden ticket" id="success">
+
+
+<h2>
+🚂 DATE EXPRESS
+</h2>
+
+
+<p>
+مسافر:
+<span id="tname"></span>
+</p>
+
+
+<p>
+تاریخ:
+<span id="tdate"></span>
+</p>
+
+
+<p>
+ساعت:
+<span id="ttime"></span>
+</p>
+
+
+<p>
+غذا:
+<span id="tfood"></span>
+</p>
+
+
+<p>
+نوشیدنی:
+<span id="tdrink"></span>
+</p>
+
+
+<p>
+گل:
+<span id="tflower"></span>
+</p>
+
+
+<p>
+مکان:
+<span id="tplace"></span>
+</p>
+
+
+<p>
+یادداشت:
+<span id="tlike"></span>
+</p>
+
+
+<p>
+شماره بلیت:
+<span id="tnumber"></span>
+</p>
+
+
+</div>
 
 
 <script>
 
 
-const sheetURL =
+const scriptURL =
 "https://script.google.com/macros/s/AKfycbxG5W55KApHkeQf5ZY837rJjBF7efIktD2ejza8xdmkoXtEsiHjR_7YlxHEEgYa11whSA/exec";
+
+
+let food="";
+let drink="";
+
+
+
+
+// رفتن به صفحه سفارش
+
+function nextForm(){
+
+document.getElementById("hoora").classList.add("hidden");
+
+document.getElementById("form").classList.remove("hidden");
+
+
+createParticles();
+
+}
+
+
+
+
+
+
+// انتخاب غذا
+
+function selectFood(el,value){
+
+
+document.querySelectorAll(".food")
+.forEach(x=>x.classList.remove("selected"));
+
+
+el.classList.add("selected");
+
+
+food=value;
+
+
+}
+
+
+
+
+
+// انتخاب نوشیدنی
+
+function selectDrink(el,value){
+
+
+document.querySelectorAll(".drink")
+.forEach(x=>x.classList.remove("selected"));
+
+
+el.classList.add("selected");
+
+
+drink=value;
+
+
+}
+
+
+
 
 
 
 
 // بله
 
-function acceptDate(){
-
-document.getElementById("start").style.display="none";
-
-document.getElementById("info").style.display="block";
-
-}
+document.getElementById("yes").onclick=function(){
 
 
-
-// نه فرار کن
-
-let noBtn=document.getElementById("noBtn");
+document.getElementById("question")
+.classList.add("hidden");
 
 
-noBtn.addEventListener("mouseover",function(){
-
-let x=Math.random()*250;
-let y=Math.random()*250;
-
-noBtn.style.left=x+"px";
-noBtn.style.top=y+"px";
-
-});
+document.getElementById("hoora")
+.classList.remove("hidden");
 
 
+fireworks();
 
-
-// مرحله بعد
-
-function openLikes(){
-
-document.getElementById("info").style.display="none";
-
-document.getElementById("likes").style.display="block";
-
-}
-
-
-
-
-// ساخت تیکت + ارسال شیت
-
-function makeTicket(){
-
-
-let data={
-
-name:document.getElementById("fullname").value,
-
-date:document.getElementById("date").value,
-
-time:document.getElementById("time").value,
-
-food:document.getElementById("food").value,
-
-drink:document.getElementById("drink").value,
-
-place:document.getElementById("place").value,
-
-like:document.getElementById("favorite").value
 
 };
 
 
 
 
-// ارسال به Google Sheet
 
-fetch(sheetURL,{
 
-method:"POST",
 
-body:JSON.stringify(data)
+// فشفشه
+
+function fireworks(){
+
+
+/* انفجار اول مثل قبل */
+
+let end=Date.now()+3000;
+
+
+(function frame(){
+
+
+confetti({
+
+particleCount:20,
+
+spread:100,
+
+origin:{
+x:0.5,
+y:0.3
+}
+
+});
+
+
+
+if(Date.now()<end){
+
+requestAnimationFrame(frame);
+
+}
+
+
+})();
+
+
+
+
+/* بارش فشفشه از بالا */
+
+
+setInterval(()=>{
+
+
+confetti({
+
+particleCount:15,
+
+spread:70,
+
+startVelocity:20,
+
+origin:{
+x:Math.random(),
+y:0
+}
+
+
+});
+
+
+},700);
+
+
+
+}
+
+
+
+// ذرات متحرک صفحه سفارش
+
+function createParticles(){
+
+
+let icons=["✨","🌸","💫"];
+
+
+setInterval(()=>{
+
+
+let p=document.createElement("div");
+
+
+p.className="particle";
+
+
+p.innerHTML=
+icons[Math.floor(Math.random()*icons.length)];
+
+
+
+p.style.left=Math.random()*100+"vw";
+
+p.style.animationDuration=
+(5+Math.random()*5)+"s";
+
+
+
+document.body.appendChild(p);
+
+
+
+setTimeout(()=>{
+
+p.remove();
+
+},10000);
+
+
+
+},700);
+
+
+
+}
+
+
+
+
+
+
+
+// دکمه نه فرار کنه
+
+const no=document.getElementById("no");
+
+
+document.addEventListener("mousemove",(e)=>{
+
+
+let r=no.getBoundingClientRect();
+
+
+let d=Math.hypot(
+
+e.clientX-(r.left+r.width/2),
+
+e.clientY-(r.top+r.height/2)
+
+);
+
+
+
+if(d<100){
+
+
+no.style.left=Math.random()*80+"vw";
+
+no.style.top=Math.random()*80+"vh";
+
+
+}
+
 
 });
 
 
 
 
-// نمایش تیکت
-
-document.getElementById("likes").style.display="none";
-
-document.getElementById("result").style.display="block";
 
 
-document.getElementById("ticketText").innerHTML=
 
-"👤 "+data.name+
-"<br><br>📅 "+data.date+
-"<br>⏰ "+data.time+
-"<br><br>🍔 "+data.food+
-"<br>🥤 "+data.drink+
-"<br>📍 "+data.place+
-"<br>❤️ "+data.like;
+
+
+// ساخت بلیت
+
+function sendData(){
+
+
+let ticket="DATE-"+Date.now();
+
+
+
+let data={
+
+
+name:document.getElementById("name").value,
+
+date:document.getElementById("date").value,
+
+time:document.getElementById("time").value,
+
+food:food,
+
+drink:drink,
+
+flower:document.getElementById("flower").value,
+
+place:document.getElementById("place").value,
+
+like:document.getElementById("like").value,
+
+ticket:ticket
+
+
+};
+
+
+
+
+
+tname.innerHTML=data.name;
+
+tdate.innerHTML=data.date;
+
+ttime.innerHTML=data.time;
+
+tfood.innerHTML=data.food;
+
+tdrink.innerHTML=data.drink;
+
+tflower.innerHTML=data.flower;
+
+tplace.innerHTML=data.place;
+
+tlike.innerHTML=data.like;
+
+tnumber.innerHTML=ticket;
+
+
+
+
+
+
+fetch(scriptURL,{
+
+method:"POST",
+
+body:JSON.stringify(data)
+
+})
+
+.then(()=>{
+
+
+document.getElementById("form")
+.classList.add("hidden");
+
+
+document.getElementById("success")
+.classList.remove("hidden");
+
+
+});
 
 
 }

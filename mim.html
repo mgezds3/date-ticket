@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<title>Date Ticket ❤️</title>
+
+<style>
+
+body{
+background:#ffeef5;
+font-family:tahoma;
+text-align:center;
+padding-top:40px;
+overflow:hidden;
+}
+
+.box{
+background:white;
+width:360px;
+margin:auto;
+padding:30px;
+border-radius:25px;
+box-shadow:0 0 20px #ccc;
+min-height:400px;
+position:relative;
+}
+
+button{
+padding:12px 25px;
+border:0;
+border-radius:20px;
+font-size:18px;
+cursor:pointer;
+}
+
+.yes{
+background:#ff4f81;
+color:white;
+}
+
+.no{
+background:#555;
+color:white;
+position:absolute;
+transition:.3s;
+}
+
+input{
+width:85%;
+padding:12px;
+margin:6px;
+border-radius:10px;
+border:1px solid #ccc;
+}
+
+.hide{
+display:none;
+}
+
+.ticket{
+background:#fff0f5;
+border:2px dashed #ff4f81;
+padding:20px;
+border-radius:20px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="box">
+
+
+<div id="start">
+
+<h1>❤️</h1>
+
+<h2>
+میشه همراه من بیای؟
+</h2>
+
+<p>
+ انتخاب کاملاً با خودته میتونی بگی نه 😊
+</p>
+
+
+<button class="yes" onclick="acceptDate()">
+بله
+</button>
+
+
+<button class="no" id="noBtn">
+نه
+</button>
+
+
+</div>
+
+
+
+
+<div id="info" class="hide">
+
+<h2>🎉 هورااا</h2>
+
+<p>چیز یعنی مرسی که قبول کردی   ❤️</p>
+
+
+<input id="fullname" placeholder="اسم و فامیل">
+
+<input id="date" type="date">
+
+<input id="time" type="time">
+
+
+<br>
+
+<button class="yes" onclick="openLikes()">
+ادامه
+</button>
+
+
+</div>
+
+
+
+
+<div id="likes" class="hide">
+
+<h2>✨ علایق</h2>
+
+
+<input id="food" placeholder="غذای مورد علاقه">
+
+<input id="drink" placeholder="نوشیدنی مورد علاقه">
+
+<input id="place" placeholder="مکان مورد علاقه">
+
+<input id="favorite" placeholder="چیزهایی که دوست داره">
+
+<input id="favorite" placeholder="گل مورد علاقه">
+
+<br>
+
+<button class="yes" onclick="makeTicket()">
+ساخت تیکت 🎟
+</button>
+
+
+</div>
+
+
+
+
+
+<div id="result" class="hide">
+
+<div class="ticket">
+
+<h2>🎟 DATE TICKET</h2>
+
+<div id="ticketText"></div>
+
+<h3>
+❤️ CONFIRMED ❤️
+</h3>
+
+</div>
+
+</div>
+
+
+
+</div>
+
+
+
+
+<script>
+
+
+const sheetURL =
+"https://script.google.com/macros/s/AKfycbxG5W55KApHkeQf5ZY837rJjBF7efIktD2ejza8xdmkoXtEsiHjR_7YlxHEEgYa11whSA/exec";
+
+
+
+
+// بله
+
+function acceptDate(){
+
+document.getElementById("start").style.display="none";
+
+document.getElementById("info").style.display="block";
+
+}
+
+
+
+// نه فرار کن
+
+let noBtn=document.getElementById("noBtn");
+
+
+noBtn.addEventListener("mouseover",function(){
+
+let x=Math.random()*250;
+let y=Math.random()*250;
+
+noBtn.style.left=x+"px";
+noBtn.style.top=y+"px";
+
+});
+
+
+
+
+// مرحله بعد
+
+function openLikes(){
+
+document.getElementById("info").style.display="none";
+
+document.getElementById("likes").style.display="block";
+
+}
+
+
+
+
+// ساخت تیکت + ارسال شیت
+
+function makeTicket(){
+
+
+let data={
+
+name:document.getElementById("fullname").value,
+
+date:document.getElementById("date").value,
+
+time:document.getElementById("time").value,
+
+food:document.getElementById("food").value,
+
+drink:document.getElementById("drink").value,
+
+place:document.getElementById("place").value,
+
+like:document.getElementById("favorite").value
+
+};
+
+
+
+
+// ارسال به Google Sheet
+
+fetch(sheetURL,{
+
+method:"POST",
+
+body:JSON.stringify(data)
+
+});
+
+
+
+
+// نمایش تیکت
+
+document.getElementById("likes").style.display="none";
+
+document.getElementById("result").style.display="block";
+
+
+document.getElementById("ticketText").innerHTML=
+
+"👤 "+data.name+
+"<br><br>📅 "+data.date+
+"<br>⏰ "+data.time+
+"<br><br>🍔 "+data.food+
+"<br>🥤 "+data.drink+
+"<br>📍 "+data.place+
+"<br>❤️ "+data.like;
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>
